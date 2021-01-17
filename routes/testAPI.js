@@ -3,8 +3,12 @@ var router = express.Router();
 var request = require('request');
 
 router.get('/search', function (req, res, next) {
-    request({ url: `https://remotive.io/api/remote-jobs?search=${req.query.search}`, json: true }, function (err, response, body) {
-        res.json(body);
+    const collection = global.db.collection('jobs');
+    collection.find({ description: { $regex: req.query.search } }).toArray((err, results) => {
+        if (err) {
+            return console.log(err)
+        }
+        res.json(results);
     });
 });
 
