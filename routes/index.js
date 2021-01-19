@@ -5,7 +5,7 @@ const MongoClient = require("mongodb").MongoClient;
 
 const uri = 'mongodb+srv://zezal:4Zl0HjeSBLTAch59@cluster0.h9qrb.mongodb.net/<dbname>?retryWrites=true&w=majority';
 const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
+const cities = ['Mumbai', 'Rio de Janeiro', 'Tianjin', 'Manila', 'London', 'New York', 'Berlin', 'Remote', 'Tokyo', 'Rome', 'Moscow', 'Minsk', 'San Francisco', 'Sidney', 'Paris', 'Warsaw', 'Kiev', 'Amsterdam', 'Dresden', 'Singapore'];
 
 
 mongoClient.connect((err, client) => {
@@ -28,6 +28,22 @@ router.get('/', function (req, res, next) {
 
 
 module.exports = router;
+/*
+function randomInteger(min, max) {
+  // случайное число от min до (max+1)
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+} */
+
+/*   request({ url: `https://remotive.io/api/remote-jobs`, json: true }, function (err, response, body) {
+      let data = body.jobs;
+    data.forEach(job => {
+      job.location = cities[randomInteger(0, 19)];
+      job.company_logo_url = `https://remotive.io/job/${job.id}/logo`;
+    });
+      collection.insertMany(body.jobs)
+    res.json(body);
+  }); */
 /*
 for (let index = 0; index < jobs.length; index++) {
   if (index < 76) { jobs[index].location = 'Mumbai'; }
