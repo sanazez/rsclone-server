@@ -3,31 +3,44 @@ var router = express.Router();
 var request = require('request');
 const MongoClient = require("mongodb").MongoClient;
 
-const uri = 'mongodb+srv://zezal:4Zl0HjeSBLTAch59@cluster0.h9qrb.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const fetch = require('node-fetch');
+const baseUrl = 'https://api.hh.ru/';
+const clientId = 'I9QF0M1Q2K9RDIAMF2UGHMLR62UEO1GOONK5PGQQM7IAH08NNOG1KEDK6VGCEG2E';
+const clientSecret = 'OVBNKPDPF93IKBO7CKPUVNNSS3I1C6SNGCD06FUAVIRK4OG15560DEDM7NS4OA0A';
+const tokenApp = 'ST545HKDJ3I70U65CU18JC79N62J3UMA3996CHOAN39TKVJREBVITB9LKDASRPQR';
+
+const options = {
+  method: 'get',
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'User-Agent': 'rsclone (sanazez1234@gmail.com)',
+    'Authorization': `Bearer ${tokenApp}`,
+  },
+}
+
+router.get('/', async function (req, res, next) {
+  try {
+    const response = await fetch(`${baseUrl}vacancies/?page=0&per_page=5`, options);
+    const result = await response.json();
+    res.json(result);
+  }
+  catch (error) {
+    console.error('Ошибка:', error);
+  }
+});
+
+module.exports = router;
+
+
+/*const uri = 'mongodb+srv://zezal:4Zl0HjeSBLTAch59@cluster0.h9qrb.mongodb.net/<dbname>?retryWrites=true&w=majority';
 const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const cities = ['Mumbai', 'Rio de Janeiro', 'Tianjin', 'Manila', 'London', 'New York', 'Berlin', 'Remote', 'Tokyo', 'Rome', 'Moscow', 'Minsk', 'San Francisco', 'Sidney', 'Paris', 'Warsaw', 'Kiev', 'Amsterdam', 'Dresden', 'Singapore'];
-
-
 mongoClient.connect((err, client) => {
   if (err) {
     return console.log(err);
   }
   global.db = client.db('rsclone');
-
-});
-
-router.get('/', function (req, res, next) {
-  const collection = global.db.collection('jobs');
-  collection.find().toArray((err, results) => {
-    if (err) {
-      return console.log(err)
-    }
-    res.json(results);
-  });
-});
-
-
-module.exports = router;
+});*/
 /*
 function randomInteger(min, max) {
   // случайное число от min до (max+1)

@@ -16,25 +16,12 @@ const options = {
     },
 }
 
-
-/*const func = async (callback) => {
-    try {
-        const response = await fetch(`${baseUrl}vacancies`, options);
-        const result = await response.json();
-        callback(result);
-    }
-    catch (error) {
-        console.error('Ошибка:', error);
-    }
-}*/
 router.get('/', async function (req, res, next) {
     try {
-        const response = await fetch(`${baseUrl}vacancies`, options);
+        const response = await fetch(`${baseUrl}vacancies/?host=jobs.tut.by&page=0&per_page=5`, options);
         const result = await response.json();
         res.json(result);
-        console.log(result)
-
-    }
+           }
     catch (error) {
         console.error('Ошибка:', error);
     }
