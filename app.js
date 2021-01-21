@@ -7,6 +7,7 @@ var cors = require("cors");
 var indexRouter = require('./routes/index');
 var singleJobRouter = require('./routes/single-job');
 var testAPIRouter = require("./routes/testAPI");
+const hhRoute = require('./routes/hh');
 var app = express();
 
 // view engine setup
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/hh', hhRoute);
 app.use('/', indexRouter);
 app.use('/id', singleJobRouter);
 app.use("/testAPI", testAPIRouter);
