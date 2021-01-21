@@ -18,14 +18,13 @@ const options = {
 
 router.get('/', async function (req, res, next) {
     try {
-        const response = await fetch(`${baseUrl}vacancies/?host=jobs.tut.by&page=0&per_page=5`, options);
+        const response = await fetch(`${baseUrl}vacancies/?text=Reactjs&host=jobs.tut.by&&page=0&per_page=6`, options);
         const result = await response.json();
         res.json(result);
            }
     catch (error) {
         console.error('Ошибка:', error);
     }
-
 });
 
 module.exports = router;
