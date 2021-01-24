@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
-router.get('/search', async function (req, res, next) {
-    const url = encodeURI(`${global.baseUrl}vacancies/?text=${req.query.search}&page=0&per_page=5`);
+router.get('/', async function (req, res, next) {
+    const url = encodeURI(`${global.baseUrl}suggests/vacancy_search_keyword?text=${req.query.word}`);
     try {
         const response = await fetch(url, global.options);
         const result = await response.json();

@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var singleJobRouter = require('./routes/single-job');
 var testAPIRouter = require("./routes/testAPI");
 const hhRoute = require('./routes/hh');
+const  searchKeywordRouter = require('./routes/search-keyword')
 var app = express();
 
 // view engine setup
@@ -21,8 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/keyword',searchKeywordRouter)
 app.use('/hh', hhRoute);
-app.use('/', indexRouter);
+app.use('/page', indexRouter);
 app.use('/id', singleJobRouter);
 app.use("/testAPI", testAPIRouter);
 // catch 404 and forward to error handler
