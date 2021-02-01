@@ -1,18 +1,18 @@
-const cool = require('cool-ascii-faces');
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require("cors");
-var indexRouter = require('./routes/index');
-var singleJobRouter = require('./routes/single-job');
-var testAPIRouter = require("./routes/testAPI");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require("cors");
+const indexRouter = require('./routes/index');
+const singleJobRouter = require('./routes/single-job');
+const testAPIRouter = require("./routes/testAPI");
 const hhRoute = require('./routes/hh');
 const  searchKeywordRouter = require('./routes/search-keyword');
 const citiesKeywordRouter = require('./routes/cities-keyword');
 const coolRouter = require('./routes/cool');
-var app = express();
+const similarJobRouter = require('./routes/similar-job')
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/cool',coolRouter);
-
+app.use('/code',similarJobRouter);
 app.use('/city-keyword',citiesKeywordRouter)
 app.use('/keyword',searchKeywordRouter)
 app.use('/hh', hhRoute);
