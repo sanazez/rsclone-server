@@ -17,8 +17,25 @@ global.options = {
 };
 
 router.get('/', async function (req, res, next) {
+  let area = '';
+  let searchText = '';
+  let period = '';
+  let experience = '';
+  if(req.query.search) {
+    searchText =`text=${req.query.search}`
+  }
+  if(req.query.area) {
+    area = `&area=${req.query.area}`
+  }
+   if(req.query.period && req.query.period !== '0') {
+    period = `&period=${req.query.period}`;
+   }
+  if(req.query.experience && req.query.experience !=='0') {
+    experience = `&experience=${req.query.experience}`
+  }
+    const url = encodeURI(`${global.baseUrl}vacancies/?${searchText}${area+period+experience}&page=${req.query.page}&per_page=5`);
   try {
-    const response = await fetch(`${global.baseUrl}vacancies/?page=${req.query.page}&per_page=5`, global.options);
+    const response = await fetch(url, global.options);
     const result = await response.json();
     res.json(result);
   }
