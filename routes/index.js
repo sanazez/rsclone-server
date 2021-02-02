@@ -23,8 +23,9 @@ router.get('/', async function (req, res, next) {
     let experience = '';
     let employment = '';
     let schedule = '';
+    let typeSorting = '';
     if (req.query.search) {
-        searchText = `text=${req.query.search}`
+        searchText = `&text=${req.query.search}`
     }
     if (req.query.area) {
         area = `&area=${req.query.area}`
@@ -53,7 +54,11 @@ router.get('/', async function (req, res, next) {
             })
         }
     }
-    const url = encodeURI(`${global.baseUrl}vacancies/?${searchText}${area + period + experience + schedule + employment}&page=${req.query.page}&per_page=5`);
+    if (req.query.vacancy_search_order) {
+        typeSorting = `&order_by=${req.query.vacancy_search_order}`
+    }
+    console.log(typeSorting)
+    const url = encodeURI(`${global.baseUrl}vacancies/?page=${req.query.page}&per_page=5${searchText}${area + period + experience + schedule + employment + typeSorting}`);
     try {
         const response = await fetch(url, global.options);
         const result = await response.json();
