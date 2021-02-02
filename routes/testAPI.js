@@ -9,7 +9,8 @@ router.get('/search', async function (req, res, next) {
     let employment = '';
     let schedule = '';
     let typeSorting = '';
-    if (req.query.area) {
+    console.log(req.query.area)
+    if (req.query.area && req.query.area !== '0') {
         area = `&area=${req.query.area}`
     }
     if (req.query.period && req.query.period !== '0') {
