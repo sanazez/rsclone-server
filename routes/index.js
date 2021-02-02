@@ -8,40 +8,59 @@ const tokenApp = 'ST545HKDJ3I70U65CU18JC79N62J3UMA3996CHOAN39TKVJREBVITB9LKDASRP
 
 global.baseUrl = 'https://api.hh.ru/';
 global.options = {
-  method: 'get',
-  headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'User-Agent': 'rsclone (sanazez1234@gmail.com)',
-    'Authorization': `Bearer ${tokenApp}`,
-  },
+    method: 'get',
+    headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'User-Agent': 'rsclone (sanazez1234@gmail.com)',
+        'Authorization': `Bearer ${tokenApp}`,
+    },
 };
 
 router.get('/', async function (req, res, next) {
-  let area = '';
-  let searchText = '';
-  let period = '';
-  let experience = '';
-  if(req.query.search) {
-    searchText =`text=${req.query.search}`
-  }
-  if(req.query.area) {
-    area = `&area=${req.query.area}`
-  }
-   if(req.query.period && req.query.period !== '0') {
-    period = `&period=${req.query.period}`;
-   }
-  if(req.query.experience && req.query.experience !=='0') {
-    experience = `&experience=${req.query.experience}`
-  }
-    const url = encodeURI(`${global.baseUrl}vacancies/?${searchText}${area+period+experience}&page=${req.query.page}&per_page=5`);
-  try {
-    const response = await fetch(url, global.options);
-    const result = await response.json();
-    res.json(result);
-  }
-  catch (error) {
-    console.error('Ошибка:', error);
-  }
+    let area = '';
+    let searchText = '';
+    let period = '';
+    let experience = '';
+    let employment = '';
+    let schedule = '';
+    if (req.query.search) {
+        searchText = `text=${req.query.search}`
+    }
+    if (req.query.area) {
+        area = `&area=${req.query.area}`
+    }
+    if (req.query.period && req.query.period !== '0') {
+        period = `&period=${req.query.period}`;
+    }
+    if (req.query.experience && req.query.experience !== '0') {
+        experience = `&experience=${req.query.experience}`
+    }
+    if (req.query.employment) {
+        if (typeof req.query.employment === 'string') {
+            employment = `&employment=${req.query.employment}`;
+        } else if (typeof req.query.employment === 'object') {
+            req.query.employment.forEach(item => {
+                employment += `&employment=${item}`
+            })
+        }
+    }
+    if (req.query.schedule) {
+        if (typeof req.query.schedule === 'string') {
+            schedule = `&schedule=${req.query.schedule}`;
+        } else if (typeof req.query.schedule === 'object') {
+            req.query.schedule.forEach(item => {
+                schedule += `&schedule=${item}`
+            })
+        }
+    }
+    const url = encodeURI(`${global.baseUrl}vacancies/?${searchText}${area + period + experience + schedule + employment}&page=${req.query.page}&per_page=5`);
+    try {
+        const response = await fetch(url, global.options);
+        const result = await response.json();
+        res.json(result);
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
 });
 
 module.exports = router;
