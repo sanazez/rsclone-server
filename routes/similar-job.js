@@ -7,9 +7,10 @@ router.get('/', async function (req, res, next) {
         const response = await fetch(`${global.baseUrl}vacancies/${req.query.codeJob}/similar_vacancies`, global.options);
         const result = await response.json();
         res.json(result);
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Ошибка:', error);
+        
     }
 });
+
 module.exports = router;
